@@ -1,0 +1,25 @@
+#!/bin/bash
+MUSER="$1"
+MPASS="$2"
+MDB="$3"
+HOST="$4"
+BACKUP="$5"
+# Detect paths
+MYSQL=$(which mysql)
+AWK=$(which awk)
+GREP=$(which grep)
+if [ $# -ne 5 ]
+then
+	echo "Usage: $0 {MySQL-User-Name} {MySQL-User-Password} {MySQL-Database-Name} {MySQL-Database-Host} {Backup-file-name}"
+	echo "Drops all tables from a MySQL"
+	exit 1
+fi
+TABLES=$($MYSQL -h $HOST -u $MUSER -p$MPASS $MDB -e 'show tables' | $AWK '{ print $1}' | $GREP -v '^Tables' )
+for t in $TABLES
+do
+	#echo "Deleting $t table from $MDB database..."
+	$MYSQL -h $HOST -u $MUSER -p$MPASS $MDB -e "drop table $t"
+done
+echo "Deleted all tables from $MDB"
+mysql --user=$MUSER --password=$MPASS $MDB < $BACKUP
+echo "Database $MDB restored to $BACKUP"
