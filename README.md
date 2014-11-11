@@ -5,8 +5,7 @@ This is a collection of work environment scripts. Customary for me and making my
 
 ### Done
 * Database restart query (restartDB script)
-* Krusader, Eclipse starts since some console window
-
+* Krusader, Eclipse, Geany starts since some console window
 
 ### Usage
 Into your linux shell

@@ -1,2 +1,2 @@
 #!/bin/bash
-eclipse & krusader
+eclipse & geany && krusader
